@@ -4,41 +4,41 @@ const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
 const params = `?client_id=${id}&client_secret=${sec}`;
 
-getProfile (username) => {
+function getProfile (username) {
   return axios.get(`https://api.github.com/users/${username}${params}`)
   // destructuring user and user.data
     .then(({ data }) => data);
 }
 
-getRepos (username) => {
+function getRepos (username) {
   return axios.get(`https://api.github.com/users/${username}/repos${params}&per_page=100`);
 }
 
-getStarCount (repos) => {
+function getStarCount (repos) {
   // destructure repo and repo.stargazers_count
   repos.data.reduce((count, { stargazers_count }) => {
     return count + stargazers_count
   }, 0);
 }
 
-calculateScore ({ followers }, repos) => {
+function calculateScore ({ followers }, repos) {
   // destructure followers, move getstarcount into return
   return (followers * 3) + getStarCount(repos);
 }
 
-handleError (error) => {
+function handleError (error) {
   console.warn(error);
   return null;
 }
 
-getUserData (player) => {
+function getUserData (player) {
   return Promise.all([
     getProfile(player),
     getRepos(player)
   ]).then(([profile, repos]) => ({ profile,  score: calculateScore(profile, repos) }))
 }
 
-sortPlayers (players) => {
+function sortPlayers (players) {
   return players.sort((a, b) => b.score - a.score);
 }
 
