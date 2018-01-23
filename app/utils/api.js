@@ -16,9 +16,7 @@ function getRepos (username) {
 
 function getStarCount (repos) {
   // destructure repo and repo.stargazers_count
-  repos.data.reduce((count, { stargazers_count }) => {
-    return count + stargazers_count
-  }, 0);
+  return repos.data.reduce((count, { stargazers_count }) => { count + stargazers_count }, 0);
 }
 
 function calculateScore ({ followers }, repos) {
@@ -48,7 +46,7 @@ module.exports = {
       .then(sortPlayers)
       .catch(handleError);
   },
-  fetchPopularRepos: (language) {
+  fetchPopularRepos (language) {
     const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
 
     return axios.get(encodedURI).then(({ data }) => data.items);
