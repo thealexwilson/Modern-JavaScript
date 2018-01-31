@@ -1,7 +1,7 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const api = require('../utils/api');
-const Loading = require('./Loading');
+import React from 'react'
+import PropTypes from 'prop-types'
+import { fetchPopularRepos } from '../utils/api'
+import Loading from './Loading'
 
 function SelectLanguage ({ selectedLanguage, onSelect }) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
@@ -10,7 +10,7 @@ function SelectLanguage ({ selectedLanguage, onSelect }) {
       {languages.map((lang) => (
         <li
           style={lang === selectedLanguage ? {color: '#d0021b'} : null}
-          onClick=() => { onSelect(lang) }
+          onClick={() => { onSelect(lang) } }
           key={lang}>
             {lang}
         </li>
@@ -71,7 +71,7 @@ class Popular extends React.Component {
       repos: null
     }));
 
-    api.fetchPopularRepos(lang)
+    fetchPopularRepos(lang)
       .then((repos) => this.setState(() => ({ repos })));
   }
   render() {
@@ -89,4 +89,4 @@ class Popular extends React.Component {
   }
 }
 
-module.exports = Popular;
+export default Popular;

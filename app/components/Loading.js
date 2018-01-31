@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const styles = {
   content: {
@@ -21,8 +21,8 @@ class Loading extends React.Component {
     const stopper = text + '...';
 
     this.interval = window.setInterval(() => {
-      this.state.text === stopper)
-      ? this.setState(() => ({ text: text }))
+      this.state.text === stopper
+      ? this.setState(() => ({ text: this.props.text }))
       : this.setState((prevState) => ({ text: prevState.text + '.' }))
     }, speed)
   }
@@ -32,7 +32,7 @@ class Loading extends React.Component {
   render() {
     return (
       <p style={styles.content}>
-        {text}
+        {this.state.text}
       </p>
     )
   }
@@ -48,4 +48,4 @@ Loading.defaultProps = {
   speed: 300
 };
 
-module.exports = Loading;
+export default Loading;
